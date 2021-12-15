@@ -7,7 +7,7 @@ VERSION      ?= $(shell git describe --tags --always --dirty --match="v*" 2> /de
 IMAGE_TAG=${DOCKER_IMAGE_HOST}/${DOCKER_IMAGE_ORG}/${PROJECT_NAME}
 BUILD_ID=${USER}-${VERSION}-$(VCS_REF)
 
-docker:
+build:
 	docker build \
 		--build-arg BUILD_DATE="${DATE_TAG}" \
 		--build-arg BUILD_ID="${BUILD_ID}" \
@@ -17,4 +17,7 @@ docker:
 		--tag=${IMAGE_TAG}:latest \
 		 .
 
-.DEFAULT_GOAL := docker
+push:
+	docker push ${IMAGE_TAG}:latest
+
+.DEFAULT_GOAL := build

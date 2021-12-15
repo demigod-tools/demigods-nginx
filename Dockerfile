@@ -5,12 +5,10 @@ WORKDIR /tmp
 
 RUN apt-get update -y --fix-missing && apt-get install -y \
       gnupg2 \
-      curl
-
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-
-RUN apt-get update -y --fix-missing && apt-get install -y \
+      curl \
+    && curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update -y --fix-missing && apt-get install -y \
       syncthing \
       supervisor \
       gvfs \
@@ -23,20 +21,17 @@ RUN apt-get update -y --fix-missing && apt-get install -y \
       libxi6 \
       libgconf-2-4 \
       gnupg2 \
-      google-chrome-stable
-
-
-
-RUN mkdir -p /usr/share/man/man1
-RUN apt-get update -y --fix-missing && apt-get -yf install   default-jre-headless default-jdk-headless default-jre default-jdk
-
-RUN wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN mv chromedriver /usr/bin/chromedriver
-RUN chown root:root /usr/bin/chromedriver
-RUN chmod +x /usr/bin/chromedriver
-RUN wget https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
-RUN mv selenium-server-standalone-3.9.1.jar /opt/selenium-server-standalone.jar
+      google-chrome-stable \
+    && mkdir -p /usr/share/man/man1 \
+    && apt-get update -y --fix-missing  \
+    && apt-get -yf install default-jre-headless default-jdk-headless default-jre default-jdk \
+    && wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip \
+    && unzip chromedriver_linux64.zip \
+    && mv chromedriver /usr/bin/chromedriver \
+    && chown root:root /usr/bin/chromedriver \
+    && chmod +x /usr/bin/chromedriver \
+    && wget https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar \
+    && mv selenium-server-standalone-3.9.1.jar /opt/selenium-server-standalone.jar
 
 COPY ./nginx /etc/nginx
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
