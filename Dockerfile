@@ -3,6 +3,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
 
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+
 RUN apt-get update -y --fix-missing \
     && apt-get upgrade -y \
     && apt-get install -y \
@@ -33,12 +35,12 @@ RUN apt-get update -y --fix-missing \
     && chown root:root /usr/bin/chromedriver \
     && chmod +x /usr/bin/chromedriver \
     && wget https://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar \
-    && mv selenium-server-standalone-3.9.1.jar /opt/selenium-server-standalone.jar
+    && mv selenium-server-standalone-3.9.1.jar /opt/selenium-server-standalone.jar \
+    && chmod +x /docker-entrypoint.sh  \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY ./nginx /etc/nginx
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh && rm -rf /var/lib/apt/lists/*
 WORKDIR /
 
 EXPOSE 80

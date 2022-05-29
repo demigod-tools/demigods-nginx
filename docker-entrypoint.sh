@@ -3,4 +3,4 @@
 set -e
 
 
-nginx -g daemon off;
+/usr/sbin/nginx -g "daemon off;" -c /etc/nginx/nginx.conf
