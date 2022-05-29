@@ -20,6 +20,7 @@ RUN apt-get update -y --fix-missing \
       procps \
       apt-utils \
       zip \
+      iputils-ping \
       unzip \
       xvfb \
       libxi6 \
