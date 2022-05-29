@@ -1,6 +1,6 @@
 PROJECT_NAME ?= nginx
 REPO_NAME    ?= stovak/${PROJECT_NAME}
-VCS_REF      ?= $(shell git rev-parse --short HEAD)
+VCS_REF      ?= $(shell git rev-parse --short HEAD | cut -c1-6)
 DATE_TAG     ?= $(shell TZ=UTC date +%Y-%m-%d_%H.%M)
 VERSION      ?= $(shell git describe --tags --always --dirty --match="v*" 2> /dev/null || cat $(CURDIR)/.version 2> /dev/null || echo v0)
 

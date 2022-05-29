@@ -1,3 +1,3 @@
-# Nginx Repo for UMGCentral #
+# Nginx Repo for Demigod Tools #
 
 basically just ```make```

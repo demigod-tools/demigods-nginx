@@ -3,7 +3,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /tmp
 
-RUN apt-get update -y --fix-missing && apt-get install -y \
+RUN apt-get update -y --fix-missing \
+    && apt-get upgrade -y \
+    && apt-get install -y \
       gnupg2 \
       curl \
     && curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -36,8 +38,7 @@ RUN apt-get update -y --fix-missing && apt-get install -y \
 COPY ./nginx /etc/nginx
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-RUN rm -rf /var/lib/apt/lists/*
+RUN chmod +x /docker-entrypoint.sh && rm -rf /var/lib/apt/lists/*
 WORKDIR /
 
 EXPOSE 80
@@ -45,4 +46,4 @@ EXPOSE 80
 STOPSIGNAL SIGTERM
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "/usr/bin/supervisord" ]
+CMD ["nginx", "-g", "daemon off;"]

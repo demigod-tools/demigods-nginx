@@ -3,4 +3,4 @@
 set -e
 
 
-/usr/bin/supervisord
+nginx -g daemon off;
