@@ -13,20 +13,21 @@ RUN apt-get update -y --fix-missing \
     && curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
     && apt-get update -y --fix-missing && apt-get install -y \
-      syncthing \
-      supervisor \
-      gvfs \
-      vim \
-      procps \
       apt-utils \
-      zip \
-      iputils-ping \
-      unzip \
-      xvfb \
-      libxi6 \
-      libgconf-2-4 \
+      gettext-base\
       gnupg2 \
       google-chrome-stable \
+      gvfs \
+      iputils-ping \
+      libgconf-2-4 \
+      libxi6 \
+      procps \
+      supervisor \
+      syncthing \
+      unzip \
+      vim \
+      xvfb \
+      zip \
     && mkdir -p /usr/share/man/man1 \
     && apt-get update -y --fix-missing  \
     && apt-get -yf install default-jre-headless default-jdk-headless default-jre default-jdk \
